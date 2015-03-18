@@ -19,6 +19,7 @@
       <maven.compiler.source>1.6</maven.compiler.source>
 
       <!-- Define dependency versions -->
+      <version.commons-lang3>3.3.2</version.commons-lang3>
       <version.commons-math3>3.4.1</version.commons-math3>
       <version.commons-csv>1.1</version.commons-csv>
       <version.gson>2.3.1</version.gson>
@@ -26,6 +27,12 @@
   </properties>
 
   <dependencies>
+      <dependency>
+          <groupId>org.apache.commons</groupId>
+          <artifactId>commons-lang3</artifactId>
+          <version>${version.commons-lang3}</version>
+      </dependency>
+
       <dependency>
           <groupId>org.apache.commons</groupId>
           <artifactId>commons-math3</artifactId>

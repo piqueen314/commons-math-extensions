@@ -17,64 +17,48 @@
 package com.vsthost.rnd.commons.math.ext.linear;
 
 import com.google.gson.Gson;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVRecord;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
+import org.apache.commons.math3.linear.RealVector;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
-
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import org.apache.commons.math3.util.MathArrays;
 
 /**
- * Created by vst on 26/2/15.
+ * Provides extended functionality for real matrices and vectors from common maths.
  */
 public class EMatrixUtils {
 
-    public static RealMatrix readMatrix (String filepath) throws IOException {
-        // Initialize the return value:
-        List<double[]> retval = new ArrayList();
-
-        // Initilize the reader:
-        Reader in = new FileReader(filepath);
-
-        // Parse and get the iterarable:
-        Iterable<CSVRecord> records = CSVFormat.EXCEL.parse(in);
-
-        // Iterate over the records and populate return value:
-        for (CSVRecord record : records) {
-            double[] row = new double[record.size()];
-            for (int i = 0; i < record.size(); i++) {
-                row[i] = Double.parseDouble(record.get(i));
-            }
-            retval.add(row);
-        }
-
-        // Convert the list to an array:
-        double[][] retvalArray = new double[retval.size()][];
-        retval.toArray(retvalArray);
-
-        // Done, return the array:
-        return MatrixUtils.createRealMatrix(retvalArray);
-    }
-
-    public static void writeMatrix (double[][] matrix, String filepath) throws IOException {
-        Gson gson = new Gson();
-        System.out.println(gson.toJson(matrix));
-    }
-
+    /**
+     * Returns the column range from the matrix as a new matrix.
+     *
+     * @param matrix The input matrix
+     * @param start The index of the column to start with (inclusive)
+     * @param end The index of the column to end with (inclusive)
+     * @return A new matrix with columns specified
+     */
     public static RealMatrix getColumRange (RealMatrix matrix, int start, int end) {
         return matrix.getSubMatrix(0, matrix.getRowDimension() - 1, start, end);
     }
 
+    /**
+     * Returns the row range from the matrix as a new matrix.
+     *
+     * @param matrix The input matrix
+     * @param start The index of the row to start with (inclusive)
+     * @param end The index of the row to end with (inclusive)
+     * @return A new matrix with rows specified
+     */
     public static RealMatrix getRowRange (RealMatrix matrix, int start, int end) {
         return matrix.getSubMatrix(start, end, 0, matrix.getColumnDimension() - 1);
     }
 
+    /**
+     * Returns the sums of columns.
+     *
+     * @param matrix The matrix of which the sums of columns to be computed
+     * @return A double array of column sums
+     */
     public static double[] colSums (RealMatrix matrix) {
         // Declare and initialize the return value:
         double[] retval = new double[matrix.getColumnDimension()];
@@ -90,6 +74,12 @@ public class EMatrixUtils {
         return retval;
     }
 
+    /**
+     * Returns the sums of rows.
+     *
+     * @param matrix The matrix of which the sums of rows to be computed
+     * @return A double array of row sums.
+     */
     public static double[] rowSums (RealMatrix matrix) {
         // Declare and initialize the return value:
         double[] retval = new double[matrix.getColumnDimension()];
@@ -105,6 +95,12 @@ public class EMatrixUtils {
         return retval;
     }
 
+    /**
+     * Returns the means of columns.
+     *
+     * @param matrix The matrix of which the means of columns to be computed
+     * @return A double array of column means
+     */
     public static double[] colMeans (RealMatrix matrix) {
         // Get the col sums:
         double[] retval = EMatrixUtils.colSums(matrix);
@@ -121,6 +117,12 @@ public class EMatrixUtils {
         return retval;
     }
 
+    /**
+     * Returns the means of rows.
+     *
+     * @param matrix The matrix of which the means of rows to be computed
+     * @return A double array of row means
+     */
     public static double[] rowMeans (RealMatrix matrix) {
         // Get the col sums:
         double[] retval = EMatrixUtils.rowSums(matrix);
@@ -137,6 +139,13 @@ public class EMatrixUtils {
         return retval;
     }
 
+    /**
+     * Returns a new matrix by subtracting elements column by column.
+     *
+     * @param matrix The input matrix
+     * @param vector The vector to be subtracted from columns
+     * @return A new matrix of which the vector is subtracted column by column
+     */
     public static RealMatrix colSubtract (RealMatrix matrix, double[] vector) {
         // Declare and initialize the new matrix:
         double[][] retval = new double[matrix.getRowDimension()][matrix.getColumnDimension()];
@@ -153,6 +162,13 @@ public class EMatrixUtils {
         return MatrixUtils.createRealMatrix(retval);
     }
 
+    /**
+     * Returns a new matrix by subtracting elements row by row.
+     *
+     * @param matrix The input matrix
+     * @param vector The vector to be subtracted from rows
+     * @return A new matrix of which the vector is subtracted row by row
+     */
     public static RealMatrix rowSubtract (RealMatrix matrix, double[] vector) {
         // Declare and initialize the new matrix:
         double[][] retval = new double[matrix.getRowDimension()][matrix.getColumnDimension()];
@@ -169,6 +185,36 @@ public class EMatrixUtils {
         return MatrixUtils.createRealMatrix(retval);
     }
 
+    /**
+     * Returns a new matrix by adding elements row by row.
+     *
+     * @param matrix The input matrix
+     * @param vector The vector to be added to rows
+     * @return A new matrix of which the vector is added row by row
+     */
+    public static RealMatrix columnAdd (RealMatrix matrix, double[] vector) {
+        // Declare and initialize the new matrix:
+        double[][] retval = new double[matrix.getRowDimension()][matrix.getColumnDimension()];
+
+        // Iterate over rows:
+        for (int col = 0; col < retval.length; col++) {
+            // Iterate over columns:
+            for (int row = 0; row < retval[0].length; row++) {
+                retval[row][col] = matrix.getEntry(row, col) + vector[row];
+            }
+        }
+
+        // Done, return a new matrix:
+        return MatrixUtils.createRealMatrix(retval);
+    }
+
+    /**
+     * Returns a new matrix by adding elements row by row.
+     *
+     * @param matrix The input matrix
+     * @param vector The vector to be added to rows
+     * @return A new matrix of which the vector is added row by row
+     */
     public static RealMatrix rowAdd (RealMatrix matrix, double[] vector) {
         // Declare and initialize the new matrix:
         double[][] retval = new double[matrix.getRowDimension()][matrix.getColumnDimension()];
@@ -185,43 +231,13 @@ public class EMatrixUtils {
         return MatrixUtils.createRealMatrix(retval);
     }
 
-    public static double sum (double[] vector) {
-        // Declare and initialize the accumulator:
-        double total = 0.0;
-
-        // Iterate over the vector:
-        for (int i = 0; i < vector.length; i++) {
-            total += vector[i];
-        }
-
-        // Done, return:
-        return total;
-    }
-
-    public static double sumOfAbsolutes (double[] vector) {
-        // Declare and initialize the accumulator:
-        double total = 0.0;
-
-        // Iterate over the vector:
-        for (int i = 0; i < vector.length; i++) {
-            total += Math.abs(vector[i]);
-        }
-
-        // Done, return:
-        return total;
-    }
-
-    public static double means (double[] vector) {
-        return EMatrixUtils.sum(vector) / vector.length;
-    }
-
-    public static double median (double[] vector) {
-        final double[] sorted = vector.clone();
-        Arrays.sort(sorted);
-        return sorted[vector.length / 2];
-    }
-
-    public static double[] colStdDevs (RealMatrix matrix) {
+    /**
+     * Returns the standard deviations of columns.
+     *
+     * @param matrix The matrix of which the standard deviations of columns to be computed
+     * @return A double array of column standard deviations.
+     */
+    public static double[] columnStdDevs(RealMatrix matrix) {
         double[] retval = new double[matrix.getColumnDimension()];
         for (int i = 0; i < retval.length; i++) {
             retval[i] = new DescriptiveStatistics(matrix.getColumn(i)).getStandardDeviation();
@@ -229,17 +245,69 @@ public class EMatrixUtils {
         return retval;
     }
 
-    public static double fastExp(double x) {
-        x = 1d + x / 256d;
-        x *= x; x *= x; x *= x; x *= x;
-        x *= x; x *= x; x *= x; x *= x;
-        return x;
+    /**
+     * Returns the standard deviations of rows.
+     *
+     * @param matrix The matrix of which the standard deviations of rows to be computed
+     * @return A double array of row standard deviations.
+     */
+    public static double[] rowStdDevs(RealMatrix matrix) {
+        double[] retval = new double[matrix.getRowDimension()];
+        for (int i = 0; i < retval.length; i++) {
+            retval[i] = new DescriptiveStatistics(matrix.getRow(i)).getStandardDeviation();
+        }
+        return retval;
+    }
 
-        // TODO: Find the most efficient exp method.
-        //return Math.exp(x);
-        //return FastMath.exp(x);
-        //return Double.longBitsToDouble(((long) (1512775 * val + 1072632447)) << 32);
-        //long tmp = (long) (1512775 * val + (1072693248 - 60801));
-        //return Double.longBitsToDouble(tmp << 32);
+    public static RealMatrix rbrMultiply(RealMatrix matrix, RealVector vector) {
+        // Define the return value:
+        RealMatrix retval = MatrixUtils.createRealMatrix(matrix.getRowDimension(), matrix.getColumnDimension());
+
+        // Iterate over rows:
+        for (int i = 0; i < retval.getRowDimension(); i++) {
+            retval.setRowVector(i, matrix.getRowVector(i).ebeMultiply(vector));
+        }
+
+        // Done, return:
+        return retval;
+    }
+
+    public static RealMatrix rbind (RealMatrix m1, RealMatrix m2) {
+        return MatrixUtils.createRealMatrix(ArrayUtils.addAll(m1.getData(), m2.getData()));
+    }
+
+    public static RealMatrix shuffleRows (RealMatrix matrix) {
+        // Create an index vector to be shuffled:
+        int[] index = MathArrays.sequence(matrix.getRowDimension(), 0, 1);
+        MathArrays.shuffle(index);
+
+        // Create a new matrix:
+        RealMatrix retval = MatrixUtils.createRealMatrix(matrix.getRowDimension(), matrix.getColumnDimension());
+        
+        // Populate:
+        for (int row = 0; row < index.length; row++) {
+            retval.setRowVector(row, matrix.getRowVector(index[row]));
+        }
+
+        // Done, return:
+        return retval;
+    }
+
+    /**
+     * Converts a real matrix to a JSON string.
+     *
+     * @return A JSON representation of the matrix.
+     */
+    public static String toJson (RealMatrix matrix) {
+        return new Gson().toJson(matrix.getData());
+    }
+
+    /**
+     * Converts a real vector to a JSON string.
+     *
+     * @return A JSON representation of the matrix.
+     */
+    public static String toJson (RealVector vector) {
+        return new Gson().toJson(vector.toArray());
     }
 }

@@ -174,4 +174,132 @@ public class EMatrixUtilsTest extends TestCase
         assertEquals(297.0, subtracted.getEntry(2, 2));
     }
 
+    public void testGetColumnRange () {
+        // Create a sample matrix:
+        RealMatrix testMatrix = MatrixUtils.createRealMatrix(3, 3);
+        testMatrix.setRow(0, new double[]{0, 1, 2});
+        testMatrix.setRow(1, new double[]{10, 11, 22});
+        testMatrix.setRow(2, new double[]{100, 111, 222});
+
+        // Check:
+        RealMatrix sliced = EMatrixUtils.getColumRange(testMatrix, 0, 0);
+        assertEquals(1, sliced.getColumnDimension());
+        assertEquals(3, sliced.getRowDimension());
+        assertEquals(0.0, sliced.getEntry(0, 0));
+        assertEquals(10.0, sliced.getEntry(1, 0));
+        assertEquals(100.0, sliced.getEntry(2, 0));
+
+        // Check:
+        sliced = EMatrixUtils.getColumRange(testMatrix, 0, 1);
+        assertEquals(2, sliced.getColumnDimension());
+        assertEquals(3, sliced.getRowDimension());
+        assertEquals(0.0, sliced.getEntry(0, 0));
+        assertEquals(10.0, sliced.getEntry(1, 0));
+        assertEquals(100.0, sliced.getEntry(2, 0));
+        assertEquals(1.0, sliced.getEntry(0, 1));
+        assertEquals(11.0, sliced.getEntry(1, 1));
+        assertEquals(111.0, sliced.getEntry(2, 1));
+    }
+
+    public void testGetRowRange () {
+        // Create a sample matrix:
+        RealMatrix testMatrix = MatrixUtils.createRealMatrix(3, 3);
+        testMatrix.setRow(0, new double[]{0, 1, 2});
+        testMatrix.setRow(1, new double[]{10, 11, 22});
+        testMatrix.setRow(2, new double[]{100, 111, 222});
+
+        // Check:
+        RealMatrix sliced = EMatrixUtils.getRowRange(testMatrix, 0, 0);
+        assertEquals(3, sliced.getColumnDimension());
+        assertEquals(1, sliced.getRowDimension());
+        assertEquals(0.0, sliced.getEntry(0, 0));
+        assertEquals(1.0, sliced.getEntry(0, 1));
+        assertEquals(2.0, sliced.getEntry(0, 2));
+
+        // Check:
+        sliced = EMatrixUtils.getRowRange(testMatrix, 0, 1);
+        assertEquals(3, sliced.getColumnDimension());
+        assertEquals(2, sliced.getRowDimension());
+        assertEquals(0.0, sliced.getEntry(0, 0));
+        assertEquals(1.0, sliced.getEntry(0, 1));
+        assertEquals(2.0, sliced.getEntry(0, 2));
+        assertEquals(10.0, sliced.getEntry(1, 0));
+        assertEquals(11.0, sliced.getEntry(1, 1));
+        assertEquals(22.0, sliced.getEntry(1, 2));
+    }
+
+    public void testColumnAdd () {
+        // Create a sample matrix:
+        RealMatrix testMatrix = MatrixUtils.createRealMatrix(3, 3);
+        testMatrix.setRow(0, new double[]{0, 1, 2});
+        testMatrix.setRow(1, new double[]{10, 11, 22});
+        testMatrix.setRow(2, new double[]{100, 111, 222});
+
+        // Check:
+        RealMatrix added = EMatrixUtils.columnAdd(testMatrix, new double[]{1, 2, 3});
+        assertEquals(3, added.getColumnDimension());
+        assertEquals(3, added.getRowDimension());
+        assertEquals(1.0, added.getEntry(0, 0));
+        assertEquals(2.0, added.getEntry(0, 1));
+        assertEquals(3.0, added.getEntry(0, 2));
+        assertEquals(12.0, added.getEntry(1, 0));
+        assertEquals(13.0, added.getEntry(1, 1));
+        assertEquals(24.0, added.getEntry(1, 2));
+        assertEquals(103.0, added.getEntry(2, 0));
+        assertEquals(114.0, added.getEntry(2, 1));
+        assertEquals(225.0, added.getEntry(2, 2));
+    }
+
+    public void testRowAdd () {
+        // Create a sample matrix:
+        RealMatrix testMatrix = MatrixUtils.createRealMatrix(3, 3);
+        testMatrix.setRow(0, new double[]{0, 1, 2});
+        testMatrix.setRow(1, new double[]{10, 11, 22});
+        testMatrix.setRow(2, new double[]{100, 111, 222});
+
+        // Check:
+        RealMatrix added = EMatrixUtils.rowAdd(testMatrix, new double[]{1, 2, 3});
+        assertEquals(3, added.getColumnDimension());
+        assertEquals(3, added.getRowDimension());
+        assertEquals(1.0, added.getEntry(0, 0));
+        assertEquals(3.0, added.getEntry(0, 1));
+        assertEquals(5.0, added.getEntry(0, 2));
+        assertEquals(11.0, added.getEntry(1, 0));
+        assertEquals(13.0, added.getEntry(1, 1));
+        assertEquals(25.0, added.getEntry(1, 2));
+        assertEquals(101.0, added.getEntry(2, 0));
+        assertEquals(113.0, added.getEntry(2, 1));
+        assertEquals(225.0, added.getEntry(2, 2));
+    }
+
+    public void testRowStd () {
+        // Create a sample matrix:
+        RealMatrix testMatrix = MatrixUtils.createRealMatrix(3, 3);
+        testMatrix.setRow(0, new double[]{2, 3, 5});
+        testMatrix.setRow(1, new double[]{7, 11, 13});
+        testMatrix.setRow(2, new double[]{17, 19, 29});
+
+        // Check:
+        double[] stds = EMatrixUtils.rowStdDevs(testMatrix);
+        assertEquals(3, stds.length);
+        assertEquals(1.52753, stds[0], 0.00001);
+        assertEquals(3.05505, stds[1], 0.00001);
+        assertEquals(6.42910, stds[2], 0.00001);
+    }
+
+    public void testColStd () {
+        // Create a sample matrix:
+        RealMatrix testMatrix = MatrixUtils.createRealMatrix(3, 3);
+        testMatrix.setRow(0, new double[]{2, 3, 5});
+        testMatrix.setRow(1, new double[]{7, 11, 13});
+        testMatrix.setRow(2, new double[]{17, 19, 29});
+
+        // Check:
+        double[] stds = EMatrixUtils.columnStdDevs(testMatrix);
+        assertEquals(3, stds.length);
+        assertEquals(7.63763, stds[0], 0.00001);
+        assertEquals(8.00000, stds[1], 0.00001);
+        assertEquals(12.2202, stds[2], 0.00001);
+    }
+
 }
