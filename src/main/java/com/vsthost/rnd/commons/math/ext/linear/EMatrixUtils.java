@@ -21,6 +21,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
+import org.apache.commons.math3.random.RandomGenerator;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import org.apache.commons.math3.util.MathArrays;
 
@@ -283,7 +284,24 @@ public class EMatrixUtils {
 
         // Create a new matrix:
         RealMatrix retval = MatrixUtils.createRealMatrix(matrix.getRowDimension(), matrix.getColumnDimension());
-        
+
+        // Populate:
+        for (int row = 0; row < index.length; row++) {
+            retval.setRowVector(row, matrix.getRowVector(index[row]));
+        }
+
+        // Done, return:
+        return retval;
+    }
+
+    public static RealMatrix shuffleRows (RealMatrix matrix, RandomGenerator randomGenerator) {
+        // Create an index vector to be shuffled:
+        int[] index = MathArrays.sequence(matrix.getRowDimension(), 0, 1);
+        MathArrays.shuffle(index, randomGenerator);
+
+        // Create a new matrix:
+        RealMatrix retval = MatrixUtils.createRealMatrix(matrix.getRowDimension(), matrix.getColumnDimension());
+
         // Populate:
         for (int row = 0; row < index.length; row++) {
             retval.setRowVector(row, matrix.getRowVector(index[row]));
