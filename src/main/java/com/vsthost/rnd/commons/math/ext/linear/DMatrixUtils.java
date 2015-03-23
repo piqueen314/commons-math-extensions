@@ -16,7 +16,12 @@
 
 package com.vsthost.rnd.commons.math.ext.linear;
 
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.math3.linear.MatrixUtils;
+
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * This class provides utilities for matrices implemented as
@@ -100,5 +105,54 @@ public class DMatrixUtils {
 
         // Done, return;
         return retval;
+    }
+
+    public static double[] repeat (double value, int n) {
+        // Initialize the return array:
+        double[] retval = new double[n];
+
+        // Fill the array:
+        Arrays.fill(retval, value);
+
+        // Done, return the filled array:
+        return retval;
+    }
+
+    public static double[][] cloneMatrix (double[][] matrix) {
+        return MatrixUtils.createRealMatrix(matrix).getData();
+    }
+
+    public static String[] selectByPredicate (String[] values, Boolean[] predicate) {
+        // Define the filtered list:
+        List<String> filtered = new ArrayList<String>();
+
+        // Iterate and populate:
+        for (int i = 0; i < predicate.length; i++) {
+            if (predicate[i]) {
+                filtered.add(values[i]);
+            }
+        }
+
+        // Save the value:
+        return filtered.toArray(new String[0]);
+    }
+
+    public static double[] selectByPredicate (double[] values, boolean[] predicate) {
+        // Define the filtered list:
+        List<Double> filtered = new ArrayList<>();
+
+        // Iterate and populate:
+        for (int i = 0; i < predicate.length; i++) {
+            if (predicate[i]) {
+                filtered.add(values[i]);
+            }
+        }
+
+        // Save the value:
+        return ArrayUtils.toPrimitive(filtered.toArray(new Double[0]));
+    }
+
+    public static double[] selectByPredicate (double[] values, Boolean[] predicate) {
+        return DMatrixUtils.selectByPredicate(values, ArrayUtils.toPrimitive(predicate));
     }
 }

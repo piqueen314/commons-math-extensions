@@ -22,7 +22,7 @@ import org.apache.commons.math3.util.FastMath;
  * Provides extensions to standard math functions.
  */
 public class ExtMath {
-    
+
     /**
      * Returns a fast, nearly accurate implementation of exponential function.
      *
