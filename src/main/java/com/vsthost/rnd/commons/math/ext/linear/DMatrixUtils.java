@@ -91,6 +91,14 @@ public class DMatrixUtils {
         return (sorted[vector.length / 2 - 1] + sorted[vector.length / 2]) / 2;
     }
 
+    /**
+     * Generates a sequence of specified length from specified start to specified end.
+     *
+     * @param start The number to start with.
+     * @param end The number to end with.
+     * @param length The length of the desired sequence.
+     * @return A sequence of length {@code length} starting with {@code start} and ending with {@code end}.
+     */
     public static double[] sequence (double start, double end, int length) {
         // Declare and initialize the return value:
         double[] retval = new double[length];
@@ -107,6 +115,13 @@ public class DMatrixUtils {
         return retval;
     }
 
+    /**
+     * Creates and returns an array of length {@code n} with all values set to {@code value}.
+     *
+     * @param value The value to be filled.
+     * @param n The desired length of the array.
+     * @return An array of length {@code n} with all values set to {@code value}
+     */
     public static double[] repeat (double value, int n) {
         // Initialize the return array:
         double[] retval = new double[n];
@@ -118,10 +133,23 @@ public class DMatrixUtils {
         return retval;
     }
 
+    /**
+     * Clones the given matrix.
+     *
+     * @param matrix The matrix to be cloned.
+     * @return The cloned matrix.
+     */
     public static double[][] cloneMatrix (double[][] matrix) {
         return MatrixUtils.createRealMatrix(matrix).getData();
     }
 
+    /**
+     * Creates a new array by selecting those elements marked as true in the predicate array.
+     *
+     * @param values The array where the elements are going to be selected from.
+     * @param predicate The selection mapper.
+     * @return The new array with selected items.
+     */
     public static String[] selectByPredicate (String[] values, Boolean[] predicate) {
         // Define the filtered list:
         List<String> filtered = new ArrayList<String>();
@@ -137,6 +165,13 @@ public class DMatrixUtils {
         return filtered.toArray(new String[0]);
     }
 
+    /**
+     * Creates a new array by selecting those elements marked as true in the predicate array.
+     *
+     * @param values The array where the elements are going to be selected from.
+     * @param predicate The selection mapper.
+     * @return The new array with selected items.
+     */
     public static double[] selectByPredicate (double[] values, boolean[] predicate) {
         // Define the filtered list:
         List<Double> filtered = new ArrayList<>();
@@ -152,6 +187,13 @@ public class DMatrixUtils {
         return ArrayUtils.toPrimitive(filtered.toArray(new Double[0]));
     }
 
+    /**
+     * Creates a new array by selecting those elements marked as true in the predicate array.
+     *
+     * @param values The array where the elements are going to be selected from.
+     * @param predicate The selection mapper.
+     * @return The new array with selected items.
+     */
     public static double[] selectByPredicate (double[] values, Boolean[] predicate) {
         return DMatrixUtils.selectByPredicate(values, ArrayUtils.toPrimitive(predicate));
     }
