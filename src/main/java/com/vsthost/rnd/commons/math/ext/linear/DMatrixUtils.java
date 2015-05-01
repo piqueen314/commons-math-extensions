@@ -19,6 +19,8 @@ package com.vsthost.rnd.commons.math.ext.linear;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.math3.linear.MatrixUtils;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -246,5 +248,58 @@ public class DMatrixUtils {
      */
     public static int[] getOrder(double[] values) {
         return DMatrixUtils.getOrder(values, false);
+    }
+
+    /**
+     * Returns the DOWN rounded value of the given value for the given steps.
+     *
+     * @param value The original value to be rounded.
+     * @param steps The steps.
+     * @return The DOWN rounded value of the given value for the given steps.
+     */
+    public static BigDecimal roundDownTo(double value, double steps) {
+        final BigDecimal bValue = BigDecimal.valueOf(value);
+        final BigDecimal bSteps = BigDecimal.valueOf(steps);
+
+        if (bSteps == BigDecimal.ZERO) {
+            return bValue;
+        } else {
+            return bValue.divide(bSteps, 0, RoundingMode.FLOOR).multiply(bSteps);
+        }
+    }
+
+    /**
+     * Returns the UP rounded value of the given value for the given steps.
+     *
+     * @param value The original value to be rounded.
+     * @param steps The steps.
+     * @return The UP rounded value of the given value for the given steps.
+     */
+    public static BigDecimal roundUpTo(double value, double steps) {
+        final BigDecimal bValue = BigDecimal.valueOf(value);
+        final BigDecimal bSteps = BigDecimal.valueOf(steps);
+
+        if (bSteps == BigDecimal.ZERO) {
+            return bValue;
+        } else {
+            return bValue.divide(bSteps, 0, RoundingMode.CEILING).multiply(bSteps);
+        }
+    }
+
+    /**
+     * Returns the closest rounded value of the given value for the given steps.
+     *
+     * @param value The original value to be rounded.
+     * @param steps The steps.
+     * @return The closest rounded value of the given value for the given steps.
+     */
+    public static BigDecimal roundToClosest(double value, double steps) {
+        final BigDecimal down = DMatrixUtils.roundDownTo(value, steps);
+        final BigDecimal up = DMatrixUtils.roundUpTo(value, steps);
+        final BigDecimal orig = new BigDecimal(String.valueOf(value));
+        if (orig.subtract(down).abs().compareTo(orig.subtract(up).abs()) < 0) {
+            return down;
+        }
+        return up;
     }
 }
