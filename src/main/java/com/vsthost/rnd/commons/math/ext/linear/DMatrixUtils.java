@@ -21,7 +21,9 @@ import org.apache.commons.math3.linear.MatrixUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.IntStream;
 
 /**
  * This class provides utilities for matrices implemented as
@@ -196,5 +198,53 @@ public class DMatrixUtils {
      */
     public static double[] selectByPredicate (double[] values, Boolean[] predicate) {
         return DMatrixUtils.selectByPredicate(values, ArrayUtils.toPrimitive(predicate));
+    }
+
+    /**
+     * Get the order of the specified elements in descending or ascending order.
+     *
+     * @param values A vector of double values.
+     * @param indices The indices which will be considered for ordering.
+     * @param descending Flag indicating if we go descending or not.
+     * @return A vector of indices sorted in the provided order.
+     */
+    public static int[] getOrder(double[] values, int[] indices, boolean descending) {
+        // Create an index series:
+        Integer[] opIndices = ArrayUtils.toObject(indices);
+
+        // Sort indices:
+        Arrays.sort(opIndices, new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                if (descending) {
+                    return Double.compare(values[o2], values[o1]);
+                } else {
+                    return Double.compare(values[o1], values[o2]);
+                }
+            }
+        });
+
+        return ArrayUtils.toPrimitive(opIndices);
+    }
+
+    /**
+     * Get the order of the elements in descending or ascending order.
+     *
+     * @param values A vector of double values.
+     * @param descending Flag indicating if we go descending or not.
+     * @return A vector of indices sorted in the provided order.
+     */
+    public static int[] getOrder(double[] values, boolean descending) {
+        return DMatrixUtils.getOrder(values, IntStream.range(0, values.length).toArray(), descending);
+    }
+
+    /**
+     * Get the order of the elements in ascending order.
+     *
+     * @param values A vector of double values.
+     * @return A vector of indices sorted in the ascending order.
+     */
+    public static int[] getOrder(double[] values) {
+        return DMatrixUtils.getOrder(values, false);
     }
 }
