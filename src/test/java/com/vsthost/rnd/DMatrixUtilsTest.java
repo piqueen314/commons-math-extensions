@@ -21,6 +21,8 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import java.math.BigDecimal;
+
 /**
  * Unit tests for EMatrixUtils.
  */
@@ -101,4 +103,21 @@ public class DMatrixUtilsTest extends TestCase
         this.assertEquals(1.6, sequence[1]);
         this.assertEquals(2.0, sequence[2]);
     }
+
+
+    public void testNearing () {
+        this.assertEquals(new BigDecimal("0.000"), DMatrixUtils.roundDownTo(0.0012345, 0.025));
+        this.assertEquals(new BigDecimal("0.025"), DMatrixUtils.roundUpTo(0.0012345, 0.025));
+        this.assertEquals(new BigDecimal("0.150"), DMatrixUtils.roundDownTo(0.171234, 0.025));
+        this.assertEquals(new BigDecimal("0.175"), DMatrixUtils.roundUpTo(0.171234, 0.025));
+    }
+
+    public void testClosest () {
+        this.assertEquals(new BigDecimal("0.000"), DMatrixUtils.roundToClosest(0.0012345, 0.025));
+        this.assertEquals(new BigDecimal("0.175"), DMatrixUtils.roundToClosest(0.171234, 0.025));
+        this.assertEquals(new BigDecimal("0.000"), DMatrixUtils.roundToClosest(0.012445, 0.025));
+        this.assertEquals(new BigDecimal("0.025"), DMatrixUtils.roundToClosest(0.012645, 0.025));
+        this.assertEquals(new BigDecimal("0.150"), DMatrixUtils.roundToClosest(0.161234, 0.025));
+    }
+
 }
