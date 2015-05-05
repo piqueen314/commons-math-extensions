@@ -53,7 +53,7 @@ public class IOUtils {
      */
     public static RealMatrix readMatrix (Reader reader) throws IOException {
         // Initialize the return value:
-        List<double[]> retval = new ArrayList();
+        List<double[]> retval = new ArrayList<>();
 
         // Parse and get the iterarable:
         Iterable<CSVRecord> records = CSVFormat.EXCEL.parse(reader);
