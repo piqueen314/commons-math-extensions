@@ -1,0 +1,32 @@
+VERS: 2015-05-05 ------- release/0.0.3
+
+    * 2015-05-05 be2bff5 Version bumped to 0.0.3 (vst@vsthost.com)
+    * 2015-05-05 a63fd43 Documentation (Javadoc) updates (vst@vsthost.com)
+    * 2015-05-05 8914f7e Adopted Travis (vst@vsthost.com)
+    * 2015-05-05 6d7fca3 Replaced the install script with Makefile (vst@vsthost.com)
+    * 2015-05-05 61be59f Added plugin version to POM file (vst@vsthost.com)
+    * 2015-05-05 157b40d Satisfying lint (vst@vsthost.com)
+    * 2015-05-01 0dd6526 Added discrete rounding methods with a given step size (vst@vsthost.com)
+    * 2015-05-01 12c2feb Adder getOrder method(s) to find the order of elements in a vector (vst@vsthost.com)
+    * 2015-03-29 aa6623f Development version bumped to 0.0.3-SNAPSHOT (vst@vsthost.com)
+
+VERS: 2015-03-29 889dfa0 release/0.0.2 (vst@vsthost.com)
+
+    * 2015-03-29 4943ac4 Version bumped to 0.0.2 (vst@vsthost.com)
+    * 2015-03-29 4de5036 Added Maven deployment descriptors (vst@vsthost.com)
+    * 2015-03-25 d06deb8 Added source and javadoc plugins for Maven packaging (vst@vsthost.com)
+    * 2015-03-25 0e4bda4 Development version bumped to 0.0.2-SNAPSHOT (vst@vsthost.com)
+
+VERS: 2015-03-25 5c128b3 release/0.0.1 (vst@vsthost.com)
+
+    * 2015-03-25 1c08be4 Version bumped to 0.0.1 (vst@vsthost.com)
+    * 2015-03-25 879d19f Updated POM for additional fields for publishing the library (vst@vsthost.com)
+    * 2015-03-24 76318e2 Further documentation and code cleanup (vst@vsthost.com)
+    * 2015-03-23 2faefea Row shuffling now consumes random number generator using overloaded method (vst@vsthost.com)
+    * 2015-03-23 920fbba Added new convenience function for primitive matrices and vectors (vst@vsthost.com)
+    * 2015-03-23 2d521f8 Using Java 8 (vst@vsthost.com)
+    * 2015-03-21 31a4ef9 ExtMath.fastExp is fixed to FastMath.exp from commons-math, documentation added (vst@vsthost.com)
+    * 2015-03-18 a004687 Further extensions to Apache Commons Math library (vst@vsthost.com)
+    * 2015-03-05 affabef Added licensing information (vst@vsthost.com)
+    * 2015-03-05 7f02f61 Initial code commit (vst@vsthost.com)
+    * 2015-03-05 49954d0 Initial commit (vst@vsthost.com)
