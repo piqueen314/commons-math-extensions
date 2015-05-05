@@ -37,7 +37,7 @@ public class IOUtils {
      *
      * @param filepath The path of the file which the matrix will be read from
      * @return A matrix
-     * @throws IOException
+     * @throws IOException As thrown by file reader and CSV parser.
      */
     public static RealMatrix readMatrix (String filepath) throws IOException {
         // Create a file reader and call the actual implementation:
@@ -49,7 +49,7 @@ public class IOUtils {
      *
      * @param reader The reader which the values to be read from.
      * @return A matrix
-     * @throws IOException
+     * @throws IOException As thrown by the CSV parser.
      */
     public static RealMatrix readMatrix (Reader reader) throws IOException {
         // Initialize the return value:

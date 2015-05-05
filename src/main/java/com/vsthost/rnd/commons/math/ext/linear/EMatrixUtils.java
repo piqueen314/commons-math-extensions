@@ -329,6 +329,7 @@ public class EMatrixUtils {
     /**
      * Converts a real matrix to a JSON string.
      *
+     * @param matrix The matrix to be represented by a JSON string.
      * @return A JSON representation of the matrix.
      */
     public static String toJson (RealMatrix matrix) {
@@ -338,6 +339,7 @@ public class EMatrixUtils {
     /**
      * Converts a real vector to a JSON string.
      *
+     * @param vector The vector to be represented by a JSON string.
      * @return A JSON representation of the matrix.
      */
     public static String toJson (RealVector vector) {
