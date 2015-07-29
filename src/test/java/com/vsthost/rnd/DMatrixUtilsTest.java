@@ -243,6 +243,22 @@ public class DMatrixUtilsTest extends TestCase {
     }
 
     /**
+     * Testing ensuring limits.
+     */
+    public void testEnsureLimit () {
+        // Test empty:
+        this.assertEquals(0, DMatrixUtils.ensureLimit(new double[]{}, 0, true).length);
+
+        // Test all:
+        this.assertEquals(+0.0, DMatrixUtils.ensureLimit(new double[]{0}, 0, true)[0]);
+        this.assertEquals(+2.0, DMatrixUtils.ensureLimit(new double[]{2}, 0, true)[0]);
+        this.assertEquals(+0.0, DMatrixUtils.ensureLimit(new double[]{-2.0}, 0, true)[0]);
+        this.assertEquals(+0.0, DMatrixUtils.ensureLimit(new double[]{0}, 0, false)[0]);
+        this.assertEquals(+0.0, DMatrixUtils.ensureLimit(new double[]{2}, 0, false)[0]);
+        this.assertEquals(-2.0, DMatrixUtils.ensureLimit(new double[]{-2.0}, 0, false)[0]);
+    }
+
+    /**
      * Convenience method to test boundaries.
      *
      * @param values Values to be tested.

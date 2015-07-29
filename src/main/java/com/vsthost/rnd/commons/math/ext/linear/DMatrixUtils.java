@@ -574,4 +574,41 @@ public class DMatrixUtils {
         // Done, return the return value:
         return retval;
     }
+
+    /**
+     * Ensures that the vector is limited to {@code limit} (inclusive) as {@code limit} is
+     * acting as either lower boundary ({@code min == true}) or upper boundary ({@code min == false}).
+     *
+     * @param vector The vector to be limited.
+     * @param limit The limit.
+     * @param min The flag if we should min the limit ({@code true}) or max it ({@code false}).
+     * @return Limited vector.
+     */
+    public static double[] ensureLimit (double[] vector, double limit, boolean min) {
+        // Initialize the return value:
+        final double[] retval = new double[vector.length];
+
+        // Iterate:
+        for (int i = 0; i < retval.length; i++) {
+            if (min) {
+                if (vector[i] < limit) {
+                    retval[i] = limit;
+                }
+                else {
+                    retval[i] = vector[i];
+                }
+            }
+            else {
+                if (vector[i] > limit) {
+                    retval[i] = limit;
+                }
+                else {
+                    retval[i] = vector[i];
+                }
+            }
+        }
+
+        // Done, return:
+        return  retval;
+    }
 }
