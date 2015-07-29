@@ -408,7 +408,7 @@ public class DMatrixUtils {
     }
 
     /**
-     * Provides a workhorse function for {@link DMatrixUtils#zmdb} by shuffling indices for operation.
+     * Provides a workhorse function for {@link DMatrixUtils#zmbd} by shuffling indices for operation.
      *
      * @param lower Lower distances.
      * @param upper Upper distances.
@@ -416,7 +416,7 @@ public class DMatrixUtils {
      * @param randomGenerator Random number generator.
      * @return The zero-mean bounded uniform distribution.
      */
-    private static double[] _zmdbInner (double[] lower, double[] upper, double targetMean, RandomGenerator randomGenerator) {
+    private static double[] _zmbdInner(double[] lower, double[] upper, double targetMean, RandomGenerator randomGenerator) {
         // Define the dimension of the problem:
         final int dimension = lower.length;
 
@@ -491,7 +491,7 @@ public class DMatrixUtils {
      * @param randomGenerator Random number generator.
      * @return The zero-mean bounded uniform distribution.
      */
-    public static double[] zmdb (double[] lower, double[] upper, double targetMean, RandomGenerator randomGenerator) {
+    public static double[] zmbd(double[] lower, double[] upper, double targetMean, RandomGenerator randomGenerator) {
         // Check dimension match:
         if (lower.length != upper.length) {
             throw new IllegalArgumentException("Lower and upper bounds must be of same length.");
@@ -515,7 +515,7 @@ public class DMatrixUtils {
         final int[] indices = DMatrixUtils.shuffleIndices(lower.length, randomGenerator);
 
         // Call auxiliary function:
-        final double[] zmbdValues = DMatrixUtils._zmdbInner(
+        final double[] zmbdValues = DMatrixUtils._zmbdInner(
                 DMatrixUtils.applyIndices(lower, indices),
                 DMatrixUtils.applyIndices(upper, indices),
                 targetMean,
@@ -533,8 +533,8 @@ public class DMatrixUtils {
      * @param randomGenerator Random number generator.
      * @return The zero-mean bounded uniform distribution.
      */
-    public static double[] zmdb (double[] lower, double[] upper, RandomGenerator randomGenerator) {
-        return DMatrixUtils.zmdb(lower, upper, 0.0, randomGenerator);
+    public static double[] zmbd(double[] lower, double[] upper, RandomGenerator randomGenerator) {
+        return DMatrixUtils.zmbd(lower, upper, 0.0, randomGenerator);
     }
 
     /**
