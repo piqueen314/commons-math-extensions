@@ -538,6 +538,87 @@ public class DMatrixUtils {
     }
 
     /**
+     * Returns a target-total bounded distribution sample.
+     *
+     * @param target The target total value.
+     * @param lower Lower limits.
+     * @param upper Upper limits.
+     * @param randomGenerator The random generator.
+     * @return A vector of target-total bounded sample.
+     */
+    private static double[] _ttbdInner (double target, double[] lower, double[] upper, RandomGenerator randomGenerator) {
+        // Initialize the return value:
+        final double[] retval = new double[lower.length];
+
+        // Iterate over the retval and simulate:
+        for (int i = 0; i < retval.length; i++) {
+            retval[i] = new UniformRealDistribution(randomGenerator, lower[i], upper[i]).sample();
+        }
+
+        // Compute the gap of simulated total and target total:
+        double gap = target - DMatrixUtils.sum(retval);
+
+        // If there is no gap, return the retval:
+        if (gap == 0.0) {
+            return retval;
+        }
+
+        // Iterate over the return values and adjust as per gap:
+        for (int i = 0; i < retval.length; i++) {
+            // Calculate the distances to limits:
+            final double distanceToLower = lower[i] - retval[i];
+            final double distanceToUpper = upper[i] - retval[i];
+
+            // Compute the permissible shift:
+            final double shift = gap > 0 ? Math.min(distanceToUpper, gap) : Math.max(distanceToLower, gap);
+
+            // Apply the shift:
+            retval[i] += shift;
+
+            // Update gap:
+            gap += shift;
+        }
+
+        // Done, return:
+        return retval;
+    }
+
+    /**
+     * Returns a target-total bounded distribution sample.
+     *
+     * <p>
+     *
+     * Note that this method is not the actual workhorse. This very method first
+     * shuffles indices, calls the workhorse, and readjust as per original indices.
+     *
+     * @param target The target total value.
+     * @param lower Lower limits.
+     * @param upper Upper limits.
+     * @param randomGenerator The random generator.
+     * @return A vector of target-total bounded sample.
+     */
+    public static double[] ttbd(double target, double[] lower, double[] upper, RandomGenerator randomGenerator) {
+        // Check dimension match:
+        if (lower.length != upper.length) {
+            throw new IllegalArgumentException("Lower and upper bounds must be of same length.");
+        }
+
+        // Get indices and shuffle:
+        final int[] indices = DMatrixUtils.shuffleIndices(lower.length, randomGenerator);
+
+        // Call auxiliary function:
+        final double[] ttbdValues = DMatrixUtils._ttbdInner(
+                target,
+                DMatrixUtils.applyIndices(lower, indices),
+                DMatrixUtils.applyIndices(upper, indices),
+                randomGenerator);
+
+        // Reapply original indices and return:
+        return DMatrixUtils.applyIndices(ttbdValues, DMatrixUtils.getOrder(indices));
+    }
+
+
+    /**
      * Consumes the length of an array and returns its shuffled indices.
      *
      * @param length The length of the arrays of which indices to be shuffled.
