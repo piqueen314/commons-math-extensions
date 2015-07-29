@@ -645,7 +645,7 @@ public class DMatrixUtils {
      */
     public static double[] applyIndices (double[] vector, int[] indices) {
         // Initialize the return array:
-        final double[] retval = new double[vector.length];
+        final double[] retval = new double[indices.length];
 
         // Iterate over indices and populate:
         for (int i = 0; i < retval.length; i++) {
