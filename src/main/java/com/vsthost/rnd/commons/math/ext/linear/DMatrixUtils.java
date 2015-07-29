@@ -411,10 +411,12 @@ public class DMatrixUtils {
      * Provides a workhorse function for {@link DMatrixUtils#zmdb} by shuffling indices for operation.
      *
      * @param lower Lower distances.
-     * @param upper Upper distances
+     * @param upper Upper distances.
+     * @param targetMean The target mean (ie. not zero-mean, but target-mean bounded...).
+     * @param randomGenerator Random number generator.
      * @return The zero-mean bounded uniform distribution.
      */
-    private static double[] _zmdbInner (double[] lower, double[] upper, RandomGenerator randomGenerator) {
+    private static double[] _zmdbInner (double[] lower, double[] upper, double targetMean, RandomGenerator randomGenerator) {
         // Define the dimension of the problem:
         final int dimension = lower.length;
 
@@ -446,7 +448,7 @@ public class DMatrixUtils {
             maxValue = upper[index];
 
             // Simulate or get anthitetical for the element:
-            if (mean == 0.0) {
+            if (mean == targetMean) {
                 // Update the effective range:
                 minValue = Math.max(minValue, -contingencyUpper[index]);
                 maxValue = Math.min(maxValue, -contingencyLower[index]);
@@ -479,11 +481,17 @@ public class DMatrixUtils {
     /**
      * Computes the zero-mean bounded distribution for the provided distances.
      *
+     * <p>
+     *
+     * Note that if {@code targetMean} is not zero, then the logic is not zero-mean but target-mean bounded.
+     *
      * @param lower Lower distances.
-     * @param upper Upper distances
+     * @param upper Upper distances.
+     * @param targetMean The target mean (ie. not zero-mean, but target-mean bounded...).
+     * @param randomGenerator Random number generator.
      * @return The zero-mean bounded uniform distribution.
      */
-    public static double[] zmdb (double[] lower, double[] upper, RandomGenerator randomGenerator) {
+    public static double[] zmdb (double[] lower, double[] upper, double targetMean, RandomGenerator randomGenerator) {
         // Check dimension match:
         if (lower.length != upper.length) {
             throw new IllegalArgumentException("Lower and upper bounds must be of same length.");
@@ -510,10 +518,23 @@ public class DMatrixUtils {
         final double[] zmbdValues = DMatrixUtils._zmdbInner(
                 DMatrixUtils.applyIndices(lower, indices),
                 DMatrixUtils.applyIndices(upper, indices),
+                targetMean,
                 randomGenerator);
 
         // Reapply original indices and return:
         return DMatrixUtils.applyIndices(zmbdValues, DMatrixUtils.getOrder(indices));
+    }
+
+    /**
+     * Computes the zero-mean bounded distribution for the provided distances.
+     *
+     * @param lower Lower distances.
+     * @param upper Upper distances.
+     * @param randomGenerator Random number generator.
+     * @return The zero-mean bounded uniform distribution.
+     */
+    public static double[] zmdb (double[] lower, double[] upper, RandomGenerator randomGenerator) {
+        return DMatrixUtils.zmdb(lower, upper, 0.0, randomGenerator);
     }
 
     /**
