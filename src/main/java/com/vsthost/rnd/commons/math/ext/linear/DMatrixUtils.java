@@ -558,13 +558,13 @@ public class DMatrixUtils {
         // Compute the gap of simulated total and target total:
         double gap = target - DMatrixUtils.sum(retval);
 
-        // If there is no gap, return the retval:
-        if (gap == 0.0) {
-            return retval;
-        }
-
         // Iterate over the return values and adjust as per gap:
         for (int i = 0; i < retval.length; i++) {
+            // If there is no gap, return the retval:
+            if (gap == 0.0) {
+                return retval;
+            }
+
             // Calculate the distances to limits:
             final double distanceToLower = lower[i] - retval[i];
             final double distanceToUpper = upper[i] - retval[i];
@@ -576,7 +576,7 @@ public class DMatrixUtils {
             retval[i] += shift;
 
             // Update gap:
-            gap += shift;
+            gap -= shift;
         }
 
         // Done, return:
