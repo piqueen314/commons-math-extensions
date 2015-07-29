@@ -32,39 +32,50 @@ import java.util.stream.IntStream;
  */
 public class DMatrixUtilsTest extends TestCase {
     /**
-     * Create the test case
+     * Create the test case.
      *
-     * @param testName name of the test case
+     * @param testName name of the test case.
      */
     public DMatrixUtilsTest(String testName) {
         super(testName);
     }
 
     /**
-     * @return the suite of tests being tested
+     * Creates a test suit.
+     *
+     * @return the suite of tests being tested.
      */
     public static Test suite() {
         return new TestSuite(DMatrixUtilsTest.class);
     }
 
     /**
-     * Test the sum of arrays.
+     * Testing the sum of a vector.
      */
     public void testSum() {
         this.assertEquals(6.0, DMatrixUtils.sum(new double[]{1, 2, 3}));
         this.assertEquals(-6.0, DMatrixUtils.sum(new double[]{-1, -2, -3}));
     }
 
+    /**
+     * Testing the sum of absolute values.
+     */
     public void testSumOfAbsolutes() {
         this.assertEquals(6.0, DMatrixUtils.sumOfAbsolutes(new double[]{1, 2, 3}));
         this.assertEquals(6.0, DMatrixUtils.sumOfAbsolutes(new double[]{-1, -2, -3}));
     }
 
+    /**
+     * Testing vector means.
+     */
     public void testMean() {
         this.assertEquals(2.0, DMatrixUtils.mean(new double[]{1, 2, 3}));
         this.assertEquals(-2.0, DMatrixUtils.mean(new double[]{-1, -2, -3}));
     }
 
+    /**
+     * Testing vector median.
+     */
     public void testMedian() {
         this.assertEquals(2.0, DMatrixUtils.median(new double[]{1, 2, 3}));
         this.assertEquals(-2.0, DMatrixUtils.median(new double[]{-1, -2, -3}));
@@ -72,6 +83,9 @@ public class DMatrixUtilsTest extends TestCase {
         this.assertEquals(-2.5, DMatrixUtils.median(new double[]{-1, -2, -3, -4}));
     }
 
+    /**
+     * Testing sequence generation.
+     */
     public void testSequence() {
         // Get the sequence:
         double[] sequence = DMatrixUtils.sequence(0, 1, 1);
@@ -108,7 +122,9 @@ public class DMatrixUtilsTest extends TestCase {
         this.assertEquals(2.0, sequence[2]);
     }
 
-
+    /**
+     * Testing rounding to up/down.
+     */
     public void testNearing() {
         this.assertEquals(new BigDecimal("0.000"), DMatrixUtils.roundDownTo(0.0012345, 0.025));
         this.assertEquals(new BigDecimal("0.025"), DMatrixUtils.roundUpTo(0.0012345, 0.025));
@@ -116,6 +132,9 @@ public class DMatrixUtilsTest extends TestCase {
         this.assertEquals(new BigDecimal("0.175"), DMatrixUtils.roundUpTo(0.171234, 0.025));
     }
 
+    /**
+     * Testing rounding to the closest value.
+     */
     public void testClosest() {
         this.assertEquals(new BigDecimal("0.000"), DMatrixUtils.roundToClosest(0.0012345, 0.025));
         this.assertEquals(new BigDecimal("0.175"), DMatrixUtils.roundToClosest(0.171234, 0.025));
