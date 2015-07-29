@@ -552,7 +552,12 @@ public class DMatrixUtils {
 
         // Iterate over the retval and simulate:
         for (int i = 0; i < retval.length; i++) {
-            retval[i] = new UniformRealDistribution(randomGenerator, lower[i], upper[i]).sample();
+            if (lower[i] == upper[i]) {
+                retval[i] = lower[i];
+            }
+            else {
+                retval[i] = new UniformRealDistribution(randomGenerator, lower[i], upper[i]).sample();
+            }
         }
 
         // Compute the gap of simulated total and target total:
@@ -616,7 +621,6 @@ public class DMatrixUtils {
         // Reapply original indices and return:
         return DMatrixUtils.applyIndices(ttbdValues, DMatrixUtils.getOrder(indices));
     }
-
 
     /**
      * Consumes the length of an array and returns its shuffled indices.
