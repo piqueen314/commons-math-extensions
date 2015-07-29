@@ -611,4 +611,44 @@ public class DMatrixUtils {
         // Done, return:
         return  retval;
     }
+
+    /**
+     * Computes a vector as the min of respective pairs from two arrays.
+     *
+     * @param vector1 The first vector.
+     * @param vector2 The second vector.
+     * @return Mins of two vectors.
+     */
+    public static double[] pairwiseMin (double[] vector1, double[] vector2) {
+        // Initialize the return value:
+        final double[] retval = new double[vector1.length];
+
+        // Iterate over values and get mins:
+        for (int i = 0; i < retval.length; i++) {
+            retval[i] = Math.min(vector1[i], vector2[i]);
+        }
+
+        // Done, return:
+        return retval;
+    }
+
+    /**
+     * Computes a vector as the max of respective pairs from two arrays.
+     *
+     * @param vector1 The first vector.
+     * @param vector2 The second vector.
+     * @return Maxs of two vectors.
+     */
+    public static double[] pairwiseMax (double[] vector1, double[] vector2) {
+        // Initialize the return value:
+        final double[] retval = new double[vector1.length];
+
+        // Iterate over values and get maxs:
+        for (int i = 0; i < retval.length; i++) {
+            retval[i] = Math.max(vector1[i], vector2[i]);
+        }
+
+        // Done, return:
+        return retval;
+    }
 }
