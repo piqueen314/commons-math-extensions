@@ -107,9 +107,6 @@ public class EMatrixUtils {
         // Get the col sums:
         double[] retval = EMatrixUtils.colSums(matrix);
 
-        // Get the length:
-        final int length = matrix.getColumnDimension();
-
         // Iterate over return value and divide by the length:
         for (int i = 0; i < retval.length; i++) {
             retval[i] = retval[i] / matrix.getRowDimension();
@@ -128,9 +125,6 @@ public class EMatrixUtils {
     public static double[] rowMeans (RealMatrix matrix) {
         // Get the col sums:
         double[] retval = EMatrixUtils.rowSums(matrix);
-
-        // Get the length:
-        final int length = matrix.getRowDimension();
 
         // Iterate over return value and divide by the length:
         for (int i = 0; i < retval.length; i++) {

@@ -25,10 +25,7 @@ import org.apache.commons.math3.util.MathArrays;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.IntStream;
 
 /**
@@ -172,7 +169,7 @@ public class DMatrixUtils {
         }
 
         // Save the value:
-        return filtered.toArray(new String[0]);
+        return filtered.toArray(new String[filtered.size()]);
     }
 
     /**
@@ -194,7 +191,7 @@ public class DMatrixUtils {
         }
 
         // Save the value:
-        return ArrayUtils.toPrimitive(filtered.toArray(new Double[0]));
+        return ArrayUtils.toPrimitive(filtered.toArray(new Double[filtered.size()]));
     }
 
     /**
@@ -315,7 +312,7 @@ public class DMatrixUtils {
         final BigDecimal bValue = BigDecimal.valueOf(value);
         final BigDecimal bSteps = BigDecimal.valueOf(steps);
 
-        if (bSteps == BigDecimal.ZERO) {
+        if (Objects.equals(bSteps, BigDecimal.ZERO)) {
             return bValue;
         } else {
             return bValue.divide(bSteps, 0, RoundingMode.FLOOR).multiply(bSteps);
@@ -333,7 +330,7 @@ public class DMatrixUtils {
         final BigDecimal bValue = BigDecimal.valueOf(value);
         final BigDecimal bSteps = BigDecimal.valueOf(steps);
 
-        if (bSteps == BigDecimal.ZERO) {
+        if (Objects.equals(bSteps, BigDecimal.ZERO)) {
             return bValue;
         } else {
             return bValue.divide(bSteps, 0, RoundingMode.CEILING).multiply(bSteps);
