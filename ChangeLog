@@ -1,5 +1,24 @@
-VERS: 2015-05-05 ------- release/0.0.3
+VERS: 2015-08-08 ------- release/0.0.4
 
+    * 2015-08-08 05df1f6 [release] Version bumped to 0.0.4 (vst@vsthost.com)
+    * 2015-07-30 eff44a9 [chore] Code cleanup (vst@vsthost.com)
+    * 2015-07-30 ca22f9d [fix] ttbd method no longer attempts sampling if lower == upper. (vst@vsthost.com)
+    * 2015-07-30 faa4438 [fix] Bugfix for ttbd method (vst@vsthost.com)
+    * 2015-07-30 6b5211c [feature] applyIndices now work for sub set of all indices (vst@vsthost.com)
+    * 2015-07-29 0f909a0 [feature] Added target-total bounded distribution sampling function (vst@vsthost.com)
+    * 2015-07-29 5b9a8cc [feature] Added pairwise min and pairwise max functions for two arrays (vst@vsthost.com)
+    * 2015-07-29 379928d [chore] Fixed the name of the zero-mean bounded distribution function (zmdb -> zmbd) (vst@vsthost.com)
+    * 2015-07-29 29d49fe [chore] Some missing doc strings added (vst@vsthost.com)
+    * 2015-07-29 6330486 [feature] Added a new static method to ensure vector limits. (vst@vsthost.com)
+    * 2015-07-29 7832e9e [feature] Zero-Mean Bounded Distribution now consumes a target mean, hence target-mean bounded (vst@vsthost.com)
+    * 2015-07-29 8995cdf [chore] Using gpg-agent while signing (vst@vsthost.com)
+    * 2015-07-28 9cf12f0 Added Zero-Mean Based Distribution functionality, related helpers (vst@vsthost.com)
+    * 2015-05-05 d19b494 Correction to SCM URIs in the POM file (vst@vsthost.com)
+    * 2015-05-05 e07cc92 Development version bumped to 0.0.4-SNAPSHOT (vst@vsthost.com)
+
+VERS: 2015-05-05 0cfa76f release/0.0.3 (vst@vsthost.com)
+
+    * 2015-05-05 595a839 Added and updated changelog (vst@vsthost.com)
     * 2015-05-05 be2bff5 Version bumped to 0.0.3 (vst@vsthost.com)
     * 2015-05-05 a63fd43 Documentation (Javadoc) updates (vst@vsthost.com)
     * 2015-05-05 8914f7e Adopted Travis (vst@vsthost.com)
