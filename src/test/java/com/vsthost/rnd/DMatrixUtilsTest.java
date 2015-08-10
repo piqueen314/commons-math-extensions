@@ -163,7 +163,7 @@ public class DMatrixUtilsTest extends TestCase {
         double[] upperReal = new double[]{+1.0, +5.0, +1.0, +1.0};
         double[] lowerWZero = new double[]{-4.0, -0.000001, -1.0, -4.0};
         double[] upperWZero = new double[]{+1.0, +5.0, +0.0000001, +1.0};
-        double[] lowerIllegal = new double[]{-4.0, -1.0, +1.0, -4.0};
+        double[] lowerIllegal = new double[]{44.0, -1.0, +1.0, -4.0};
         double[] upperIllegal = new double[]{+1.0, +5.0, -1.0, +1.0};
 
         // Means should always be zero:
@@ -194,21 +194,11 @@ public class DMatrixUtilsTest extends TestCase {
 
         // Expecting exceptions for positive lower boundary:
         try {
-            DMatrixUtils.zmbd(lowerIllegal, upperReal, randomGenerator);
-            fail("Illegal lower bound must fail");
+            DMatrixUtils.zmbd(lowerIllegal, upperIllegal, randomGenerator);
+            fail("Illegal lower/upper bound must fail");
         } catch (IllegalArgumentException exception) {
-            if (!exception.getMessage().equals("Lower bounds must be equal to or less than 0.")) {
-                fail("Illegal lower bound must fail with proper message.");
-            }
-        }
-
-        // Expecting exceptions for positive upper boundary:
-        try {
-            DMatrixUtils.zmbd(lowerReal, upperIllegal, randomGenerator);
-            fail("Illegal upper bound must fail");
-        } catch (IllegalArgumentException exception) {
-            if (!exception.getMessage().equals("Upper bounds must be equal to or greater than 0.")) {
-                fail("Illegal upper bound must fail with proper message.");
+            if (!exception.getMessage().equals("Lower bounds must be equal to or less than upper bounds.")) {
+                fail("Illegal lower/upper bounds must fail with proper message.");
             }
         }
     }

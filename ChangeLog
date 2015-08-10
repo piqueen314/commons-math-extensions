@@ -1,5 +1,13 @@
-VERS: 2015-08-08 ------- release/0.0.4
+VERS: 2015-08-10 ------- release/0.0.5
 
+    * 2015-08-10 dbeb9c0 [release] Version bumped to 0.0.5 (vst@vsthost.com)
+    * 2015-08-10 d4b407f [fix] ZMBD lower/upper boundaries do not necessarily need to be =<0 / >=0 (vst@vsthost.com)
+    * 2015-08-08 006f3c2 [chore] Changed Makefile to clean before deploy (vst@vsthost.com)
+    * 2015-08-08 94fa5a2 [chore] Development version bumped to 0.0.5-SNAPSHOT (vst@vsthost.com)
+
+VERS: 2015-08-08 ffbec88 release/0.0.4 (vst@vsthost.com)
+
+    * 2015-08-08 e52cac6 [release] Change log updated (vst@vsthost.com)
     * 2015-08-08 05df1f6 [release] Version bumped to 0.0.4 (vst@vsthost.com)
     * 2015-07-30 eff44a9 [chore] Code cleanup (vst@vsthost.com)
     * 2015-07-30 ca22f9d [fix] ttbd method no longer attempts sampling if lower == upper. (vst@vsthost.com)
