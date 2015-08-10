@@ -494,17 +494,10 @@ public class DMatrixUtils {
             throw new IllegalArgumentException("Lower and upper bounds must be of same length.");
         }
 
-        // Check for positive lower bounds which is not what we expect:
+        // Check for that lower bounds must be equal to or less than upper bounds.
         for (int i = 0; i < lower.length; i++) {
-            if (lower[i] > 0.0) {
-                throw new IllegalArgumentException("Lower bounds must be equal to or less than 0.");
-            }
-        }
-
-        // Check for positive lower bounds which is not what we expect:
-        for (int i = 0; i < upper.length; i++) {
-            if (upper[i] < 0.0) {
-                throw new IllegalArgumentException("Upper bounds must be equal to or greater than 0.");
+            if (lower[i] > upper[i]) {
+                throw new IllegalArgumentException("Lower bounds must be equal to or less than upper bounds.");
             }
         }
 
