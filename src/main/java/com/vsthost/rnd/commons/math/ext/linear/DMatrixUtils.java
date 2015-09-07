@@ -439,37 +439,46 @@ public class DMatrixUtils {
 
         // Iterate over the dimension in a random order and update permissible draws and mean value:
         double minValue, maxValue;
-        for (int index = 0; index < dimension - 1; index++) {
+        for (int index = 0; index < dimension; index++) {
             // Define the min/max value:
             minValue = lower[index];
             maxValue = upper[index];
 
-            // Simulate or get anthitetical for the element:
+            // Simulate or get antithetical for the element:
             if (mean == targetMean) {
-                // Update the effective range:
-                minValue = Math.max(minValue, -contingencyUpper[index]);
-                maxValue = Math.min(maxValue, -contingencyLower[index]);
+                // Get correct contingency U/L bounds by sign:
+                final double contingencyU = contingencyUpper[index] > 0 ? contingencyUpper[index] : -contingencyUpper[index];
+                final double contingencyL = contingencyLower[index] < 0 ? contingencyLower[index] : -contingencyLower[index];
 
+                // Update the effective range:
+                minValue = minValue < 0 ? Math.max(minValue, -contingencyU) : Math.min(minValue, -contingencyL);
+                maxValue = maxValue > 0 ? Math.min(maxValue, -contingencyL) : Math.max(maxValue, -contingencyU);
+
+                // Get the value:
                 if (minValue == maxValue) {
                     values[index] = minValue;
+
+                    if (values[index] < lower[index]) {
+                        values[index] = lower[index];
+                    }
+                    else if(values[index] > upper[index]){
+                        values[index] = upper[index];
+                    }
                 }
                 else {
                     values[index] = new UniformRealDistribution(randomGenerator, Math.min(minValue, maxValue), Math.max(minValue, maxValue)).sample();
                 }
             }
             else if (mean > 0.0) {
-                values[index] = Math.max(-mean, minValue);
+                values[index] = maxValue > -mean ? Math.max(-mean, minValue) : Math.min(-mean, maxValue);
             }
             else {
-                values[index] = Math.min(-mean, maxValue);
+                values[index] = minValue < -mean ? Math.min(-mean, maxValue) : Math.max(-mean, minValue);
             }
 
             // Update the mean:
             mean += values[index];
         }
-
-        // Fix the last element:
-        values[dimension - 1] = -mean;
 
         // Done, return with pride!
         return values;
