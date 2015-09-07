@@ -1,5 +1,12 @@
-VERS: 2015-08-10 ------- release/0.0.5
+VERS: 2015-09-07 ------- release/0.0.6
 
+    * 2015-09-07 1d72c78 [release] Version bumped to 0.0.6 (vst@vsthost.com)
+    * 2015-09-07 afffc33 [bugfix] Fixing a corner case at ZMBD when boundaries are not overlapping (vst@vsthost.com)
+    * 2015-08-10 018d62c [chore] Development version bumped to 0.0.6-SNAPSHOT (vst@vsthost.com)
+
+VERS: 2015-08-10 fadba18 release/0.0.5 (vst@vsthost.com)
+
+    * 2015-08-10 7a56b80 [release] Change log updated (vst@vsthost.com)
     * 2015-08-10 dbeb9c0 [release] Version bumped to 0.0.5 (vst@vsthost.com)
     * 2015-08-10 d4b407f [fix] ZMBD lower/upper boundaries do not necessarily need to be =<0 / >=0 (vst@vsthost.com)
     * 2015-08-08 006f3c2 [chore] Changed Makefile to clean before deploy (vst@vsthost.com)
