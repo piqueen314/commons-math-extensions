@@ -1,5 +1,12 @@
-VERS: 2015-09-07 ------- release/0.0.6
+VERS: 2016-03-29 ------- release/0.0.7
 
+    * 2016-03-29 4480071 [release] Version bumped to 0.0.7 (vst@vsthost.com)
+    * 2016-03-29 6c1ff16 [feature] Providing DMatrixUtils#roundToClosest for double values for performance reasons (vst@vsthost.com)
+    * 2015-09-07 81d31d5 [chore] Development version bumped to 0.0.7-SNAPSHOT (vst@vsthost.com)
+
+VERS: 2015-09-07 9379561 release/0.0.6 (vst@vsthost.com)
+
+    * 2015-09-07 6ec20e2 [release] Change log updated (vst@vsthost.com)
     * 2015-09-07 1d72c78 [release] Version bumped to 0.0.6 (vst@vsthost.com)
     * 2015-09-07 afffc33 [bugfix] Fixing a corner case at ZMBD when boundaries are not overlapping (vst@vsthost.com)
     * 2015-08-10 018d62c [chore] Development version bumped to 0.0.6-SNAPSHOT (vst@vsthost.com)

@@ -355,6 +355,40 @@ public class DMatrixUtils {
     }
 
     /**
+     * Same functionality as {@link DMatrixUtils#roundToClosest(double, double)} but operating on double values.
+     *
+     * @param value The value to be rounded.
+     * @param steps Steps.
+     * @return Rounded value.
+     */
+    public static double roundDoubleToClosest (double value, double steps) {
+        final double down = DMatrixUtils.roundDoubleDownTo(value, steps);
+        final double up = DMatrixUtils.roundDoubleUpTo(value, steps);
+        if (Math.abs(value - down) < Math.abs(value - up)) {
+            return down;
+        }
+        return up;
+    }
+
+    private static double roundDoubleDownTo(double value, double steps) {
+        if (steps == 0) {
+            return value;
+        }
+        else {
+            return Math.floor(value / steps) * steps;
+        }
+    }
+
+    private static double roundDoubleUpTo(double value, double steps) {
+        if (steps == 0) {
+            return value;
+        }
+        else {
+            return Math.ceil(value / steps) * steps;
+        }
+    }
+
+    /**
      * Creates a matrix from the provided range for columns with the given number of rows.
      *
      * @param lower The lower bound (inclusive) for the range.
